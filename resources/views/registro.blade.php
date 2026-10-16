@@ -517,6 +517,26 @@
             ? generosSeleccionados.join(', ')
             : 'Ninguno seleccionado';
 
+        fetch("{{ route('registro.store') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                nombres,
+                apellidos,
+                fecha_nacimiento: fecha,
+                ninos,
+                madre_cabeza: madre,
+                estudia: estudio,
+                generos: generosSeleccionados
+            })
+        })
+            .then(r => r.json())
+            .catch(error => console.error('Error al guardar el registro:', error));
+
         const respuestas = [
             ['Nombres', nombres],
             ['Apellidos', apellidos],
